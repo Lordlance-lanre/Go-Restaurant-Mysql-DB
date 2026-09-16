@@ -91,7 +91,11 @@ func Login(c fiber.Ctx) error {
 			"message": "Invalid password",
 		})
 	}
-	token, err := utils.GenerateJWT(strconv.Itoa(int(userData.ID)))
+	token, err := utils.GenerateJWT(
+		strconv.Itoa(int(userData.ID)),
+		userData.Email,
+		"user",
+	)
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

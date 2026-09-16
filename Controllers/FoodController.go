@@ -44,7 +44,6 @@ func CreateFoods(c fiber.Ctx) error {
 	if food.Start_Date > food.End_Date {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "start_date cannot be after end_date"})
 	}
-	// "menu_id": "a1ca9085-54c9-452c-94d7-7895297c4a60"
 
 	var menu Models.Menu
 	if err := Database.DB.Where("menu_id = ?", food.MenuID).First(&menu).Error; err != nil {
