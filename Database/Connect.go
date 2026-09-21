@@ -26,6 +26,7 @@ func ConnectDB() {
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
+		// DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	if err != nil {
 		fmt.Println("Failed to connect to database", err)
@@ -35,7 +36,7 @@ func ConnectDB() {
 	DB = db
 	fmt.Println("Connected to database")
 
-	if err := DB.AutoMigrate(&Models.User{}, &Models.Menu{}, &Models.FoodItems{}); err != nil {
+	if err := DB.AutoMigrate(&Models.User{}, &Models.Menu{}, &Models.FoodItems{}, &Models.Order{}); err != nil {
 		fmt.Println("AutoMigrate failed:", err)
 	}
 

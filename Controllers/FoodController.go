@@ -22,15 +22,15 @@ func CreateFoods(c fiber.Ctx) error {
 	food.Name = strings.TrimSpace(food.Name)
 	food.Food_image = strings.TrimSpace(food.Food_image)
 	food.Price = math.Round(food.Price*100) / 100
-	food.MenuID = strings.TrimSpace(food.MenuID)
-	if food.MenuID == "" {
+	food.MenuRef = strings.TrimSpace(food.MenuRef)
+	if food.MenuRef == "" {
     return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
         "error": "menu_id is required",
     })
 }
 	food.Start_Date = strings.TrimSpace(food.Start_Date)
 	food.End_Date = strings.TrimSpace(food.End_Date)
-	if food.Name == "" || food.Food_image == "" || food.MenuID == "" || food.Price <= 0 || food.Start_Date == "" || food.End_Date == "" {
+	if food.Name == "" || food.Food_image == "" || food.MenuRef == "" || food.Price <= 0 || food.Start_Date == "" || food.End_Date == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "name, price, food_image, menu_id, start_date, and end_date are required",
 		})
@@ -46,7 +46,7 @@ func CreateFoods(c fiber.Ctx) error {
 	}
 
 	var menu Models.Menu
-	if err := Database.DB.Where("menu_id = ?", food.MenuID).First(&menu).Error; err != nil {
+	if err := Database.DB.Where("menu_id = ?", food.MenuRef).First(&menu).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Menu not found"})
 		}

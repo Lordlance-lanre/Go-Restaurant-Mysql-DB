@@ -47,4 +47,11 @@ func AppRoutes(app *fiber.App) {
 	protected.Put("/food/update/:food_id", Controllers.UpdateFood)
 	protected.Delete("/food/:food_id", Controllers.DeleteFood)
 
+	// order routes
+	protected.Post("/create-order", Controllers.CreateOrder)
+	protected.Get("/all-orders", Controllers.GetAllOrders)
+	protected.Get("/order/:order_id", Controllers.GetOrderByID)
+	protected.Put("/order/update/:order_id", Controllers.UpdateOrders)
+	protected.Delete("/order/:order_id", Controllers.DeleteOrders)
+
 }
